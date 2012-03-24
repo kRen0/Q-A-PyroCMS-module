@@ -19,5 +19,4 @@
 |
 |	http://www.codeigniter.com/user_guide/general/routing.html
 */
-
-$route['qa/admin/responding(/:any)?']		= 'responding$1';
+$route['qa/admin/responding(/:any)?'] = 'responding$1';

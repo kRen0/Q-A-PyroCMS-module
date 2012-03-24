@@ -9,7 +9,7 @@ class Responding extends Admin_Controller
 	 * @access protected
 	 * @var string
 	 */
-	protected $section = 'a_authors';
+	protected $section = 'responding';
 	
 	private $createauthors_validation_rules = array();	
 	
