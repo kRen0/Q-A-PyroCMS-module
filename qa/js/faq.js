@@ -1,4 +1,4 @@
-(function($) {
+﻿(function($) {
     $(function() {
         do_sortable();
         /**
