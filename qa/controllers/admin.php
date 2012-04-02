@@ -34,6 +34,11 @@ class Admin extends Admin_Controller
 				'rules' => 'trim|xss_clean'
 			),
 			array(
+				'field' => 'authors',
+				'label' => lang('qa_a_author_v_label'),
+				'rules' => 'trim'
+			),
+			array(
 				'field' => 'answer',
 				'label' => lang('qa_answer_label'),
 				'rules' => 'trim|xss_clean'
@@ -157,7 +162,7 @@ class Admin extends Admin_Controller
 				}
 			}
 			else {
-				if(!$this->answers_m->update_a($id, $a_data)) {
+				if(!$this->answers_m->update_a($this->input->post('a_id'), $a_data)) {
 						$sucess = false;
 					}
 			}

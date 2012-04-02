@@ -119,10 +119,12 @@ class Responding extends Admin_Controller
 			$del_status = $this->input->post('action_to');
 			foreach($del_status as $status){
 				$this->a_authors_m->delete($status);
+				$this->answers_m->clear_author($status);
 			}
 		}else{ 
 			if( !empty($id) ){
 				$this->a_authors_m->delete($id);
+				$this->answers_m->clear_author($id);
 			}
 		}
 		redirect('admin/qa/responding/');

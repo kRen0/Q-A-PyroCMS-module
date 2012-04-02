@@ -22,26 +22,30 @@ var options = {
 			$("#sendQuestion").resetForm();
 			$("#purr").purr();
 		}
-		else {
-			$('#output').attr('style','display:block');
-			$('#name_error_output').html(response.data.name);
-			$('#email_error_output').html(response.data.email);
-			$('#question_error_output').html(response.data.question);
-			$('#captcha_error_output').html(response.data.captcha);
+		else { 
+			console.debug(response.data);
+			 for(var i in response.data){
+				if(response.data[i]){
+					noty({text:response.data[i],animateOpen:{opacity:'show'},animateClose:{opacity:'hide'},layout:'topLeft',theme:'noty_theme_default',type:'error',timeout:10000});  
+				}
+			 }
 		}
+		
+		setTimeout("HideError()", 10000);
+	}
+	function HideError()  { 
+
+		$('#output').attr('style','display:none');
+		$('#name_error_output').html('');
+		$('#email_error_output').html('');
+		$('#question_error_output').html('');
+		$('#captcha_error_output').html('');
+			
 	}
  var RecaptchaOptions = {
     theme : 'custom',
     custom_theme_widget: 'recaptcha_widget'
  };
- function hint(elem, action) {
-	if(action == 1) {
-		if(elem.value === elem.title) elem.value="";
-	}
-	else {
-		if(elem.value === "") elem.value = elem.title;
-	}
- }
 </script>
 <div class="voprosout">
 <div class="vopros">
@@ -53,14 +57,14 @@ var options = {
 <br/>
  бизнес-консультант
 </span>
-<span id="output" class="error" style="display:none">При заполнении формы обнаружены ошибки</span>
+<span id="output" class="error_string" style="display:none">При заполнении формы обнаружены ошибки</span>
 <form id="sendQuestion" action="<?php echo site_url(); ?>/qa/createquestion" method="post">
 <span id="name_error_output"></span>
-<input name="name" type="text" title="Ваше имя" value="Ваше имя" onFocus="hint(this,'1')" onBlur="hint(this)" />
+<input name="name" type="text" title="Ваше имя" placeholder="Ваше имя" />
 <span id="email_error_output"></span>
-<input name="email" type="text" title="Ваш email" value="Ваш email" onFocus="hint(this,'1')" onBlur="hint(this)" />
+<input name="email" type="text" title="Ваш email" placeholder="Ваш email" />
 <span id="question_error_output"></span>
-<textarea name="question" title="Текст сообщения" onFocus="hint(this,'1')" onBlur="hint(this)">Текст сообщения</textarea>
+<textarea name="question" title="Текст сообщения" placeholder="Текст сообщения"></textarea>
 <span id="captcha_error_output"></span>
 <span id="recaptcha_widget" style="display:none"><span id="recaptcha_image"></span>
 
@@ -73,7 +77,7 @@ var options = {
 Введите код подтверждения сюда:<br />
 <textarea name="recaptcha_challenge_field" rows="3" cols="40">
              </textarea>
-<input type="hidden" name="recaptcha_response_field" value="manual_challenge"></noscript>
+<input type="hidden" placheholder="Код" name="recaptcha_response_field" value="manual_challenge"></noscript>
 <hr class="breaker" />
 <input name="input" style="width:142px; height:31px; background-color:#FFFFFF" type="submit" class="long" value="Задать вопрос"/>
 </form>

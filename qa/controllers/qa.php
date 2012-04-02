@@ -59,7 +59,7 @@ class Qa extends Public_Controller {
     
     public function view($page = 1)
     {
-	$question_on_page = $this->question_on_page;
+	 $question_on_page = $this->question_on_page;
 	
      $questions = $this->questions_m->get_by_limit($question_on_page, ($page-1)*$question_on_page);
 	 $answers = $this->answers_m->get_date_by_qm($questions);
@@ -70,7 +70,7 @@ class Qa extends Public_Controller {
 	 foreach($this->a_authors_m->get_all_auth() AS $t) {
 		$authors[$t->id]['name'] = $t->name;
 		$authors[$t->id]['email'] = $t->email;
-	}
+	 }
             
     $this->template
 							->set('pages', $pages)
@@ -82,7 +82,7 @@ class Qa extends Public_Controller {
         
     }
 	
-		public function createquestion(){
+	public function createquestion(){
 		$this->form_validation->set_rules($this->create_validation_rules);
 		if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 			$isJq = true;
@@ -102,12 +102,13 @@ class Qa extends Public_Controller {
 			*  затем, используя template->build_json  возвращаем json Объект клиенту, и там его парзим
 			*/
 			if($isJq)
-				{
+			{
+				$this->form_validation->set_error_delimiters('<span>', '</span>');
 				$response['success'] = '0';
 				$response['data']['name'] = form_error('name');
 				$response['data']['email']  = form_error('email');
-				$response['data']['question']    = form_error('question');
-				}
+				$response['data']['question']    = $this->form_validation->error('question');
+			}
 			else $this->template
 				 ->build('create',array());
 		}
@@ -123,15 +124,15 @@ class Qa extends Public_Controller {
 		}
 		if (!$r || !$resp->is_valid) {
 			$r = false;
-			$captcha_err = '<p><span class="error">'.lang('qa_captcha_incorrect').'</span></p>'; //You can not use the call errors, without changing the CMS files :(
+			$captcha_err = lang('qa_captcha_incorrect').'</span>'; //You can not use the call errors, without changing the CMS files :(
 			if($isJq)
 				{
 				$response['success'] = '0';
-				$response['data']['captcha'] = $captcha_err;
+				$response['data']['captcha'] = '<span>'.$captcha_err;
 				}
 			else
 			$this->template
-		 	 ->set('captcha_err', $captcha_err)
+		 	 ->set('captcha_err', '<span>'.$captcha_err)
 			 ->build('create',array());
 		}
 		

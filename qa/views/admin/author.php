@@ -12,12 +12,12 @@
 						<li>
 							<label for="name"> <?= lang('faq_responding_name_label'); ?> <span>*</span> </label>
 							<div class="input">
-							<?= form_input('name',$author->name); ?>
+							<?= form_input('name',(set_value('name')!=''?set_value('name'):$author->name)); ?>
 							</div>
 						</li>
 						<li>
-							<label for="email"> <?= lang('faq_responding_email_label'); ?> </label>
-							<div class="input"> <?= form_input('email',$author->email); ?> </div>
+							<label for="email"> <?= lang('faq_responding_email_label'); ?><span>*</span> </label>
+							<div class="input"> <?= form_input('email',(set_value('email')!=''?set_value('email'):$author->email)); ?> </div>
 						</li>
 					</ul>
 				</fieldset>

@@ -20,7 +20,7 @@
 				</thead>
 				<tbody>
 					<?php foreach( $questions as $quest ): ?>
-					<tr>
+					<tr <?= $quest->answered=='0'?'style="background-color: #E4F6A8"':'' ?>>
 						<td><?=  form_checkbox('action_to[]', $quest->id); ?></td>
 						<td><?= anchor('admin/qa/view/'.$quest->id,$quest->date_add); ?> </td>
 						<td><?= $quest->author_name; ?></td>
