@@ -24,7 +24,7 @@
 						<td><?=  form_checkbox('action_to[]', $quest->id); ?></td>
 						<td><?= anchor('admin/qa/view/'.$quest->id,$quest->date_add); ?> </td>
 						<td><?= $quest->author_name; ?></td>
-						<td>���</td>
+						<td> бла-бла </td>
 						<td class="align-center buttons buttons-small">
 							<?php echo anchor('admin/qa/view/'.$quest->id, lang('qa_views_label'), 'class="button" '); ?>
 							<?php echo anchor('admin/qa/del/'.$quest->id, lang('global:delete'), array('class'=>'confirm button delete')); ?>

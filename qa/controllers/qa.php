@@ -20,6 +20,7 @@ class Qa extends Public_Controller {
         $this->load->model('answers_m');
 		$this->load->model('a_authors_m');
         $this->lang->load('qa');
+        $this->load->helper('recaptchalib');
 		
 		$this->create_validation_rules = array(	
 			array(
@@ -83,7 +84,6 @@ class Qa extends Public_Controller {
 	
 		public function createquestion(){
 		$this->form_validation->set_rules($this->create_validation_rules);
-		require_once('recaptchalib.php');
 		if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 			$isJq = true;
 		}
@@ -91,6 +91,15 @@ class Qa extends Public_Controller {
 		
 		$validation = $this->form_validation->run();
 		if(!$validation) {
+			/*
+			*
+			*	создать массив $response = array() 
+			*	в нем два моля $response['responseCode']
+			*  и  $response['data']
+			*	в случае, если произошла ошибка, то добавляем в $response['responseCode'] = 'validation_error'
+			*  а в data сообщения
+			*  затем, используя template->build_json  возвращаем json Объект клиенту, и там его парзим
+			*/
 			if($isJq)
 				echo (validation_errors());
 			else $this->template
