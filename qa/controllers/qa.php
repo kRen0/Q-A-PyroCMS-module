@@ -86,6 +86,7 @@ class Qa extends Public_Controller {
 		$this->form_validation->set_rules($this->create_validation_rules);
 		if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 			$isJq = true;
+			$response = array();
 		}
 		else $isJq = false;
 		
@@ -101,7 +102,12 @@ class Qa extends Public_Controller {
 			*  затем, используя template->build_json  возвращаем json Объект клиенту, и там его парзим
 			*/
 			if($isJq)
-				echo (validation_errors());
+				{
+				$response['success'] = '0';
+				$response['data']['name'] = form_error('name');
+				$response['data']['email']  = form_error('email');
+				$response['data']['question']    = form_error('question');
+				}
 			else $this->template
 				 ->build('create',array());
 		}
@@ -117,9 +123,12 @@ class Qa extends Public_Controller {
 		}
 		if (!$r || !$resp->is_valid) {
 			$r = false;
-			$captcha_err = '<p><span class="error">'.lang('qa_captcha_incorrect').'</span></p>';
+			$captcha_err = '<p><span class="error">'.lang('qa_captcha_incorrect').'</span></p>'; //You can not use the call errors, without changing the CMS files :(
 			if($isJq)
-				echo ($captcha_err); //You can not use the call errors, without changing the CMS files :(
+				{
+				$response['success'] = '0';
+				$response['data']['captcha'] = $captcha_err;
+				}
 			else
 			$this->template
 		 	 ->set('captcha_err', $captcha_err)
@@ -129,15 +138,19 @@ class Qa extends Public_Controller {
 		if( $validation && $r ){
 		
 			if( $order_id = $this->questions_m->insert($this->input->post()) ){
-				if($isJq) echo('success');
+				if($isJq) {
+					$response['success'] = '1';
+				}
 				else $this->template
 				 ->set('success', 1)
 				 ->build('create',array());
-				return TRUE;
 			}
 		}
 		
-        return FALSE;
+        if($isJq) 
+			echo json_encode($response);
+			
+		return TRUE;
 	}
     
 }

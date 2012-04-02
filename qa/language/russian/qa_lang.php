@@ -14,6 +14,7 @@ $lang['qa_answer_label']       = 'Ответ';
 $lang['qa_a_author_label']       = 'Отвечающий';
 $lang['qa_a_author_v_label']       = 'Автор ответа';
 $lang['qa_select_authors']  = '-- не выбран отвечающий --';
+$lang['qa_author_label']       = 'Автор';
 $lang['qa_captcha']  = 'Код подтверждения';
 $lang['qa_pages']  = 'Страницы';
 
@@ -36,5 +37,11 @@ $lang['qa_author_create_successchange']     = 'Профиль отвечающе
 $lang['qa_author_create_errorchange']     = 'Возникла ошибка при редактировании отвечающего.';
 $lang['qa_quest_successchange']     = 'Вопрос успешно отредактирован.';
 $lang['qa_quest_errorchange']     = 'Возникла ошибка при редактировании вопроса.';
-$lang['qa_captcha_incorrect']     = 'Вы не правильно ввели символы подтверждения. Пожалуйста, попробуйте ещё раз.';
+$lang['qa_captcha_incorrect']     = 'Вы неправильно ввели символы подтверждения. Пожалуйста, попробуйте ещё раз.';
 $lang['qa_question_create_success'] = 'Благодарим! Ваш вопрос принят.';
+$lang['faq_delete_success'] = 'Удаление успешно.';
+$lang['faq_action_empty'] = 'Ничего не выбрано';
+
+//res
+$lang['qa_answered']     = 'Да';
+$lang['qa_not_answered'] = 'Нет';

@@ -4,14 +4,13 @@
 class Admin extends Admin_Controller
 {
 	/**
-	 * Validation rules for creating a new faq
 	 *
 	 * @var array
 	 * @access private
 	 */
 	private $validation_rules = array();
 
-	public $section = 'faq';
+	public $section = 'qa';
 	
 	public function __construct()
 	{
@@ -69,14 +68,14 @@ class Admin extends Admin_Controller
 	public function index()
 	{
 		//Get the records and assign to template
-		$questions = $this->questions_m->get_all_q();
+		$questions = $this->questions_m->get_all_q_with_answered();
 		//build output
 		$this->template->build('admin/index',array( 'questions' => $questions ));
 	}
 
 	/**
 	 */
-	public function delete()
+	public function del($id)
 	{
 		$ids = $this->input->post('action_to');
 		
@@ -100,8 +99,14 @@ class Admin extends Admin_Controller
 		}
 		else
 		{
+		
+			if(!empty($id))
+			{
+				$this->questions_m->delete($id);
+				$this->session->set_flashdata('success', lang('faq_delete_success'));
+			}
 			//oops no ids.. ids required here.
-			$this->session->set_flashdata('notice', lang('faq_action_empty'));
+			else $this->session->set_flashdata('notice', lang('faq_action_empty'));
 		}
 		//no need to keep hanging around here,  redirect back to faq list
 		redirect('admin/qa');
@@ -141,7 +146,7 @@ class Admin extends Admin_Controller
 			//update data
 			
 			$sucess = true;
-			if(!$this->questions_m->update_q($a_id, $q_data))
+			if(!$this->questions_m->update_q($id, $q_data))
 			{
 				$sucess = false;
 			}

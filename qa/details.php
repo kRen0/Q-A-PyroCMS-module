@@ -22,7 +22,7 @@ class Module_QA extends Module {
 			'menu'	  => 'Q&A',
 			'author' => 'kReno',
 			'sections' => array(
-				'faqs' => array(
+				'qa' => array(
 					'name'=>'qa_title',
 					'uri'=>'admin/qa',
 				),

@@ -23,7 +23,13 @@ class Questions_m extends MY_Model {
     public function get_all_q()
     {
         return $this->order_by("{$this->_table}.date_add", 'DESC')
+					->order_by("{$this->_table}.id", 'DESC')
                     ->get_all();
+    }
+	
+	public function get_all_q_with_answered()
+    {
+        return $this->db->query("SELECT *, (`id` IN (SELECT q_id FROM {$this->db->dbprefix('answers')})) AS answered FROM {$this->db->dbprefix($this->_table)} ORDER BY date_add DESC, ID DESC")->result();
     }
     
     public function update_q($id, $data)
@@ -44,6 +50,7 @@ class Questions_m extends MY_Model {
 	public function get_by_limit($start, $limit)
     {
         return $this->order_by("{$this->_table}.date_add", 'DESC')
+					->order_by("{$this->_table}.id", 'DESC')
 					->limit($start, $limit)
                     ->get_all();
     }
