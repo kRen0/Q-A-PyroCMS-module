@@ -29,7 +29,7 @@ class Questions_m extends MY_Model {
 	
 	public function get_all_q_with_answered()
     {
-        return $this->db->query("SELECT *, (`id` IN (SELECT q_id FROM {$this->db->dbprefix('answers')})) AS answered FROM {$this->db->dbprefix($this->_table)} ORDER BY date_add DESC, ID DESC")->result();
+        return $this->db->query("SELECT *, (`id` IN (SELECT q_id FROM {$this->db->dbprefix('answers')})) AS answered FROM {$this->db->dbprefix($this->_table)} ORDER BY answered, date_add DESC, ID DESC")->result();
     }
     
     public function update_q($id, $data)
